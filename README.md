@@ -1,6 +1,7 @@
 # BruteForce-Detector
 
-BruteForce-Detector is a forensic PowerShell tool designed to detect brute force attacks and analyze authentication activity from Windows Event Logs, providing high-performance analysis through optimized C# and .NET processing.
+BruteForce-Detector is a forensic PowerShell tool designed to detect brute force attacks and analyze authentication activity from Windows Event Logs, providing high-performance analysis through optimized C# and .NET processing.  
+Combine it with BruteForce-Blocker to actively block malicious IP addresses and monitor blocked entries directly from firewall rules.
 
 ## Overview
 
