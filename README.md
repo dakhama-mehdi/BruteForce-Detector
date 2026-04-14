@@ -12,7 +12,7 @@ This tool provides a simple and efficient way to:
 
 ## Examples
 
-[View Online Brut-Force Example ](https://dakhama-mehdi.github.io/BruteForce-Detector/Examples/attack_map.html) 
+[View Online Brut-Force Example ](https://dakhama-mehdi.github.io/BruteForce-Detector/Examples/attack_map.html)  
 [View Online Forensic Example](https://dakhama-mehdi.github.io/BruteForce-Detector/Examples/Forensic_Mode.html)
 
 ## Install
