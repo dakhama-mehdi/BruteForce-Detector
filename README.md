@@ -10,6 +10,13 @@ This tool provides a simple and efficient way to:
 - Perform forensic analysis on authentication events
 - Generate a complete HTML report
 
+## Examples
+
+[View Online Example ] : [Brut-Force](https://dakhama-mehdi.github.io/BruteForce-Detector/Examples/attack_map.html)
+
+[View Online Example ] : [Forensic](https://dakhama-mehdi.github.io/BruteForce-Detector/Examples/Forensic_Mode.html)
+
+## Install
 The tool is designed to be easy to use:
 - Launch the `.ps1`
 - The script automatically ensures required permissions (Event Log Readers group)
