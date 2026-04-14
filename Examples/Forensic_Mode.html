@@ -1,0 +1,230 @@
+﻿<html>
+<head>
+<style>
+body { font-family: Arial; background:#1E1E1E; color:white; margin:20px; }
+
+table { border-collapse: collapse; width:100%; margin-bottom:20px; }
+th, td {border-bottom:1px solid #3a3a3a; border-right:1px solid #555; padding:8px; text-align:left;}
+th { background:#1f4e79; position:sticky; top:0; }
+tr:nth-child(even) { background:#2b2b2b; }
+
+.header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.header-right {
+    font-size:12px;
+    color:#ccc;
+}
+.cards {
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card {
+    background:#2b2b2b;
+    padding:15px;
+    border-radius:6px;
+    flex:1;
+    text-align:center;
+    font-size:16px;
+}
+
+.findings {
+    background:#2b2b2b;
+    padding:15px;
+    border-radius:6px;
+    margin-bottom:20px;
+}
+
+.finding {
+    margin-bottom:10px;
+}
+
+/* ===== FINDINGS ===== */
+
+.findings-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.finding-box {
+    flex: 1;
+    background: #2b2b2b;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    font-size: 13px;
+}
+
+.big-box {
+    flex: 1;
+    height: 100%;
+}
+
+h2 {
+    border-bottom:2px solid #444;
+    padding-bottom:5px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1 style="margin:0;">BF-Detector : Forensic Report</h1>
+    <div class="header-right">
+        NS500367 - 04/03/2026 19:17:20 - Range: 15 days
+    </div>
+</div>
+
+<!-- CARDS -->
+<div class="cards">
+
+<div class="card">
+<b>Total Attempts</b><br>
+4163
+</div>
+
+<div class="card">
+<b>Total Success</b><br>
+49
+</div>
+
+<div class="card">
+<b>Success Rate</b><br>
+   1 %
+</div>
+
+<div class="card">
+<b>Risk Level</b><br>
+High : 40 %
+</div>
+
+</div>
+
+<div class="findings-row">
+
+<!-- PROTOCOL -->
+<div class="finding-box" style="font-size:16px;">
+
+<b>Protocols : <span style='color:lightgreen; font-weight:bold;'>✔ No weak protocol</span></b>
+
+<br><br>
+
+Negotiate (16)<br>NTLM V2 (33)
+
+</div>
+
+<div class="finding-box" style="font-size:16px;">
+
+<b>Anonymous : <span style='color:lightgreen; font-weight:bold;'>✔ Not detected</span></b>
+
+</div>
+
+<!-- PROCESS -->
+<div class="finding-box" style="font-size:16px;">
+
+<b>Processes Logon : <span style='color:lightgreen; font-weight:bold;'>✔ Clean</span></b>
+
+<br><br>
+
+svchost.exe (16)
+
+</div>
+
+<!-- Open Ports -->
+<div class="finding-box" style="font-size:16px;">
+
+<b>Open Ports : <span style='color:red; font-weight:bold;'>Detected</span></b>
+
+<br><br>
+
+0.0.0.0:19192 - svchost - (Unknown)<br>0.0.0.0:2179 - vmms - (Hyper-V)<br>0.0.0.0:135 - svchost - (RPC)
+
+</div>
+
+<div class="finding-box" style="font-size:16px;">
+
+RDP : <span style='color:lightgreen;'>Enabled</span><br>NLA : <span style='color:lightgreen;'>Enabled</span><br>TLS_CredSSP : <span style='color:lightgreen;'>Enabled</span><br>Port : 19192<br>Firewall : <span style='color:lightgreen;'>Enabled</span><br>Anonymous : Allowed<br>AnonymousSAM : <span style='color:lightgreen;'>Protected</span><br>EveryoneAnon : <span style='color:lightgreen;'>Disabled</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TABLE IP -->
+<h2>IPs that Failed and Successfully Logged In</h2>
+<table>
+<tr>
+<th>IP</th>
+<th>User</th>
+<th>Failures</th>
+<th>Success</th>
+<th>Reason</th>
+<th>Protocol</th>
+<th>Source</th>
+<th>Time Range</th>
+<th>First Logon</th>
+<th>Last Logon</th>
+</tr>
+<tr>
+        <td>170.10.20.30</td>
+        <td>admin (3)<br>t2.mehdi (9)<br>admincd13 (1)<br>adminlocal (1)<br>t0.mehdi (4)<br>administrateur (1)</td>
+        <td>19</td>
+        <td>32</td>
+        <td>User does not exist (5)<br>Wrong password (11)<br>Password expired (3)</td>
+        <td>NTLM (19)</td>
+        <td>ns500367 (19)</td>
+        <td>11:56 → 23:59</td>
+        <td>03/24/2026 23:39:30</td>
+        <td>03/26/2026 13:51:34</td>
+    </tr>
+</table>
+
+<!-- TABLE USER -->
+<h2>User Logon Analysis</h2>
+<table>
+<tr>
+<th>User</th>
+<th>Connections</th>
+<th>IP Count</th>
+<th>Country</th>
+<th>City</th>
+<th>IPs</th>
+</tr>
+<tr>
+        <td>T2.mehdi</td>
+        <td>29</td>
+        <td>1</td>
+        <td>France</td>
+        <td>Paris</td>
+        <td>170.10.20.30</td>
+    </tr>
+<tr>
+        <td>admin</td>
+        <td>13</td>
+        <td>2</td>
+        <td>France</td>
+        <td>Paris<br>Marseille 03</td>
+        <td>170.10.20.30<br>50.10.20.30</td>
+    </tr>
+<tr>
+        <td>admin26</td>
+        <td>7</td>
+        <td>1</td>
+        <td>France</td>
+        <td>Marseille 03</td>
+        <td>50.10.20.30</td>
+    </tr>
+</table>
+
+</body>
+</html>
