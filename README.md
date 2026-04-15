@@ -74,7 +74,7 @@ The tool generates a complete HTML report including:
 ## Pictures
 
 <p align="Left">
-  <img src="Examples/BFdetector2.png" width="80%" />
+  <img src="Examples/BFdetector1.png" width="80%" />
 </p>
 
 <p align="center">
