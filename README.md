@@ -1,11 +1,10 @@
 # BruteForce-Detector
 
 BruteForce-Detector is a forensic PowerShell tool designed to detect brute force attacks and analyze authentication activity from Windows Event Logs, providing high-performance analysis through optimized C# and .NET processing.  
-Combine it with BruteForce-Blocker to actively block malicious IP addresses and monitor blocked entries directly from firewall rules.
+Combine it with BruteForce-Blocker to actively block malicious IP addresses and monitor blocked entries directly from firewall rules.  
 
-<p align="center">
-  <img src="Examples/BFdetector1.png" width="48%" />
-  <img src="Examples/BFdetector2.png" width="48%" />
+<p align="Left">
+  <img src="Examples/BFdetector2.png" width="80%" />
 </p>
 
 ## Overview
@@ -41,8 +40,8 @@ The tool is designed to be easy to use:
 - Automatic access configuration (Event Log Readers)
 
 ### Log Analysis
-- Failed logons (Event ID 4625)
-- Successful logons (Event ID 4624)
+- Failed logons (Event ID 4625 - Logon Type 3: Network)
+- Successful logons (Event ID 4624 – Logon Type 3: Network, Type 10: RemoteInteractive (RDP))
 - Correlation between failures and successes
 
 ### Detection Capabilities
@@ -65,7 +64,6 @@ The tool is designed to be easy to use:
 ## Output
 
 The tool generates a complete HTML report including:
-
 - KPI summary
 - Top attacker IPs
 - Targeted users
@@ -73,8 +71,22 @@ The tool generates a complete HTML report including:
 - Success vs failure correlation
 - Forensic insights
 
-  <p align="center">
+## Pictures
+
+<p align="Left">
+  <img src="Examples/BFdetector2.png" width="80%" />
+</p>
+
+<p align="center">
   <img src="https://github.com/user-attachments/assets/05d1b1cf-694e-49e4-b9cf-a6695670e516" width="800"/>
 </p>
 
+## Copyright & Contributions
+
+This project is maintained by the LogonIT.fr team.
+
+Contributions are welcome!  
+Feel free to open an issue, suggest improvements, or submit a pull request.
+
+By contributing, you help improve the tool and support the community.
 
