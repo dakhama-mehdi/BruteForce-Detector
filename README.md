@@ -23,6 +23,11 @@ The tool is designed to be easy to use:
 - Analyze logs through a graphical interface
 - Generate a ready-to-use forensic report
 
+## Usage
+
+```powershell
+.\BruteForce-Detector.ps1
+```
 ## Features
 
 - Graphical interface (GUI)
@@ -63,7 +68,8 @@ The tool generates a complete HTML report including:
 - Success vs failure correlation
 - Forensic insights
 
-## Usage
+  <p align="center">
+  <img src="https://github.com/user-attachments/assets/05d1b1cf-694e-49e4-b9cf-a6695670e516" width="800"/>
+</p>
 
-```powershell
-.\BruteForce-Detector.ps1
+
