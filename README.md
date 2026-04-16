@@ -84,6 +84,7 @@ The tool generates a complete HTML report including:
 ## Copyright & Contributions
 
 This project is maintained by the LogonIT.fr team.
+Thanks to Amrani Soufiane for his contribution.
 
 Contributions are welcome!  
 Feel free to open an issue, suggest improvements, or submit a pull request.
