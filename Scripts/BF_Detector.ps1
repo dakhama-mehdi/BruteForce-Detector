@@ -1318,7 +1318,7 @@ $btnGenHTML.Add_Click({
     $geoPoints = foreach ($ip in $uniqueIPs) {
 
     try {
-        $res = Invoke-RestMethod "http://ipwho.is/$ip" -ErrorAction Stop # "http://ip-api.com/json/$ip" -ErrorAction Stop
+        $res = Invoke-RestMethod "http://ipwho.is/$ip" -Method Get -TimeoutSec 3 -ErrorAction Stop # "http://ip-api.com/json/$ip" -ErrorAction Stop
 
         if ($res.success -eq "True") {
             [PSCustomObject]@{
@@ -1331,7 +1331,23 @@ $btnGenHTML.Add_Click({
         }
     }
     catch {
+        try {
+        $url = "http://ip-api.com/json/$ip"
+        $response = Invoke-RestMethod -Uri $url -Method Get -TimeoutSec 3
+
+        if ($response.status -eq "success") {
+            $location = [PSCustomObject]@{
+                IP   = $ip
+                Lat  = $response.lat
+                Lon  = $response.lon
+                Country = $response.country
+                City    = $response.city
+            }
+        }
+        }
+        catch {
         Write-Host "Error IP: $ip"
+    }
     }
 }
 
@@ -1366,10 +1382,10 @@ L.circle([$($g.Lat), $($g.Lon)], {color:'red', radius:50000}).addTo(map)
     }
 
     # Build HTML
-   comment -Comment  "Build Stats..."
+   comment -Comment "Build Stats..."
 
-# Data by days
-$daily = $script:fulldata |
+    # Data by days
+    $daily = $script:fulldata |
     Group-Object { (Get-Date $_.Date).ToString("dd/MM") } |
     Sort-Object Name
 
@@ -1403,7 +1419,7 @@ $daily = $script:fulldata |
     </tr>"
 }
 
-    comment -Comment "Build HTML..."
+    comment -Comment "Done HTML"
 
 # HTML 
 $html = @"
@@ -1668,8 +1684,8 @@ $Window.ShowDialog() | Out-Null
 # SIG # Begin signature block
 # MIItjQYJKoZIhvcNAQcCoIItfjCCLXoCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDHDBjzfiDxyrtM
-# OgvgsQ2/lGulYm/42yKaesO7qvRZuqCCEtUwggXJMIIEsaADAgECAhAbtY8lKt8j
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCC4cjuERNs+Myiw
+# 4ZFhiO/FihIbXmwX+RQHNDwU0TEygqCCEtUwggXJMIIEsaADAgECAhAbtY8lKt8j
 # AEkoya49fu0nMA0GCSqGSIb3DQEBDAUAMH4xCzAJBgNVBAYTAlBMMSIwIAYDVQQK
 # ExlVbml6ZXRvIFRlY2hub2xvZ2llcyBTLkEuMScwJQYDVQQLEx5DZXJ0dW0gQ2Vy
 # dGlmaWNhdGlvbiBBdXRob3JpdHkxIjAgBgNVBAMTGUNlcnR1bSBUcnVzdGVkIE5l
@@ -1774,20 +1790,20 @@ $Window.ShowDialog() | Out-Null
 # YSBTeXN0ZW1zIFMuQS4xJDAiBgNVBAMTG0NlcnR1bSBDb2RlIFNpZ25pbmcgMjAy
 # MSBDQQIQNdjgcrVvnE2sr1R1KUYcCzANBglghkgBZQMEAgEFAKB8MBAGCisGAQQB
 # gjcCAQwxAjAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwGCisGAQQBgjcC
-# AQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCAeJYJFpDjQWXaj8pXu
-# 1IC3bhw7DvtbSNQ/xa3FXkbeXjANBgkqhkiG9w0BAQEFAASCAYCdlLj6GQ4ijsfI
-# fAIhiFi10KT5aJQlqrYK/2TfHGITJB0MvdZ4AIu97oL95akvI6nzaR/J7jMI9Fz6
-# Luqsl1fcF7b1eRs/Jee8dAo/UZLZCoTEQXxt8RcfAhMDUXVDNKkDUbPSp4ZSKZPD
-# zwtj17CgRpJHeWsfju/16hKLKdd8W7RXjPR9OOh+Vuutsz2jEbecGQp65GnycKAe
-# 5sjnZHZJ9dyS50dW+5PtUhTaBeoQ3dmGkZ/aq8+3dcBA9X+bH+BDYPhF3LPrl6yQ
-# AgtSpGf+xwNWny3ZYyIPrmbx0rOMuBHGt1wHP6mMF6HsIfFAyt/7nrjW2JD2HzPj
-# t3xje1UN+35RUsG8hJb+VPOuIDdvHzQvD+VfXzckgGGS9DQ2HD8Vf2V0Vu5ne9UN
-# 6tBoqBcamqUBeKa5KhagOO64H/g4povsBAgsOWHO7fCdk3KMUhhFG5KCDYIqVpJf
-# HqoGxubX5WyF48Va3HeaGB5o/d+V7t3DmBQhuqiEStsQewTSll+hghd3MIIXcwYK
+# AQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCATWjrzbTpljV9Nlqcm
+# yZ1u2YeQYxWOYKU9RMh/Ag3GCjANBgkqhkiG9w0BAQEFAASCAYBNHTcft7w4+8Nx
+# qFoXa8hi/uZE5Hy6PRhW6Fub/civTgzRohxeds/ZD53NX3A97YLGYSwGJVm47rqH
+# bUS+2rCHp0zk4FWSS0Dqb2s5+gzb8HLBwNWhywwVYpoi/QPLbo1vJ+z5SIsdk90l
+# je6K1c8LOcwbKP+1UDNmSaCN1irPSB9KIgvtvdThzzknzkYCx4prsCxXd2p1ySnp
+# jHV+DNuWc82k1bZnUDUuZnJnegbc1G4cQBbcG4Xbs31XxlS1Yph2VjeNSisr5fYl
+# GTK3aw5oZVv8Ib39cORouCZZnVY0QJXSQ0vB9rWXhgSVqCStd36170LBLtrapF+6
+# Fx0wMK0MzpzoYjTESJ5ppGRbiNVIV2LOAwlMn/XccN+4sYvjGKn//Q4TnxDqKTFH
+# RWdx7wFYue3Wy5XdLzneqI/hIOrNnZaEsTMeoYRSa/8GtthVpfxXJKlwIQvpLqTk
+# NPhK4Bympz1Jv7Ke16jWl59BgGKKfiXBYwns2uyCawL757bJAROhghd3MIIXcwYK
 # KwYBBAGCNwMDATGCF2MwghdfBgkqhkiG9w0BBwKgghdQMIIXTAIBAzEPMA0GCWCG
 # SAFlAwQCAQUAMHgGCyqGSIb3DQEJEAEEoGkEZzBlAgEBBglghkgBhv1sBwEwMTAN
-# BglghkgBZQMEAgEFAAQgF0rPTsLd/pd6fsBKzRqC7utO1SafIlyFlqOGJtFud4oC
-# EQDk5XIaxHAL01Xg86Cp2rXyGA8yMDI2MDQyMTE0MjQ1OFqgghM6MIIG7TCCBNWg
+# BglghkgBZQMEAgEFAAQgtPI7we+OHf+d3lzXTgKuqDycwXOWwGuZTSNhxsLCzaoC
+# EQCh0IYr5/ENdtGXO3TspjuuGA8yMDI2MDQyMTE0NDMyNVqgghM6MIIG7TCCBNWg
 # AwIBAgIQCoDvGEuN8QWC0cR2p5V0aDANBgkqhkiG9w0BAQsFADBpMQswCQYDVQQG
 # EwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xQTA/BgNVBAMTOERpZ2lDZXJ0
 # IFRydXN0ZWQgRzQgVGltZVN0YW1waW5nIFJTQTQwOTYgU0hBMjU2IDIwMjUgQ0Ex
@@ -1894,20 +1910,20 @@ $Window.ShowDialog() | Out-Null
 # FQYDVQQKEw5EaWdpQ2VydCwgSW5jLjFBMD8GA1UEAxM4RGlnaUNlcnQgVHJ1c3Rl
 # ZCBHNCBUaW1lU3RhbXBpbmcgUlNBNDA5NiBTSEEyNTYgMjAyNSBDQTECEAqA7xhL
 # jfEFgtHEdqeVdGgwDQYJYIZIAWUDBAIBBQCggdEwGgYJKoZIhvcNAQkDMQ0GCyqG
-# SIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0yNjA0MjExNDI0NThaMCsGCyqGSIb3
+# SIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0yNjA0MjExNDQzMjVaMCsGCyqGSIb3
 # DQEJEAIMMRwwGjAYMBYEFN1iMKyGCi0wa9o4sWh5UjAH+0F+MC8GCSqGSIb3DQEJ
-# BDEiBCAhHklzVynA6AX8HxtybqB90euCkH48O7MaHUiCmhyHFjA3BgsqhkiG9w0B
+# BDEiBCAaD7dX210qDWNAPBQR6iRuoVUptkKw1OmsARpG+x9lzzA3BgsqhkiG9w0B
 # CRACLzEoMCYwJDAiBCBKoD+iLNdchMVck4+CjmdrnK7Ksz/jbSaaozTxRhEKMzAN
-# BgkqhkiG9w0BAQEFAASCAgC1QRSGxm845CFB5eB4J5lf55gYw4DzfLZPWd4++wuH
-# L5tgNOIEbC/VsUU7jlB0gm3Rv8cGlLAgewEAxR9US12gTo5uozpQ0eDhbbENaSaT
-# icGTHQbn77B6kt4lxpETU/sRCVIDH/7fgCC6Ovp8jXyWWE9UymemTmUzd1/r0hmz
-# Z4NPCblKWUSnBRmXjxxsjAH+ao4Yoes/gT3468Nrr8ZyWYE19oxAGZl4t7xsL0hp
-# I/MhHHK52v1iDZJRYN+YkyXaNmB5pxypxZ/wWfvVuDW0ZM2Aiq0DvxF3VuEzrmvy
-# 0YyPZfFdIUWhU1vQetDbSo/GKceYaXBtkQs1wj7JUf5+r7Ay8ACXPJRASupZOeNY
-# NsRk22bDjNMBRB63trpErIs5vurPR4QPxAvv+bt33v9GDTJpVvIGxHCCmmVIUgtv
-# Kf466MDgFwaDNPtycMS1GfRvQBcyAGt5cVABwYQ50cTF2EV6urNkt594a6jHz0RL
-# jIoiCywMpSWNKm0CDJv261nJn1xSp1nmZ7KjaBhHW7YOc1k4UXyeL66mApjv96dl
-# ZmRCPDtNq/jQFr+fdJ+iG5dNS5k6HMV82HfnC0WaFby4ahbgZ5Bp967ITnMFQNqd
-# CizSmRszB6NTXsHMbljCNojrmauCNXgtV0AFH9DaJO1DrXhkGGtdgIss9Dmmg0pg
-# mg==
+# BgkqhkiG9w0BAQEFAASCAgAXXMNLtKphpvcb2HmJDQxG/Bzuk00aDaiViEVev3f2
+# vbdvtZpanikFYUv5OmFhl2EaewXFsmLj23rbcr9IuqHQMVIMFVo57zeRRoRUYSvc
+# 7wHqQkYQ5PUru0SzNd0sZ+QO6Th3Kh0UVgGSnzDc6TMhMpLpwswHR2dOcPqdBZJU
+# JXBTWlVQi2xEYi5tLX3hyuHem7ZqAl+tHNjHenAehtlPm9Esn1NjrW0rTY3QFr4K
+# m2zAmrk1ge6Sgph0LkIoW423d7rsrAGwdQOYUEZoLEdfvxK5uP4zM58qALLsSIBC
+# 6nwPbX8TmD3GJKOmmReraxR30hAWD6Nxz42Z8g1ugzyVjDRnDTT058bdmkATDM8z
+# +pt+BtY7UcgJN3Hvww294tstjLHswhYMuu3Il1kHZiZ/ACbCRvnXSwp0H3ZHNjSK
+# zZb9VniPUH2bMR5M+fApYNVteiztfop8tb4t73zCghbp2QiFGzmafCKW4SzMtH6I
+# +8ggVog9iWcVkvTAHI0/YCZwsyeRGSMjtlKT4r0TwFzEbSn9UI7l9GjTTdXav842
+# VYZvNSLQj0WOU6V/Gr7e+tEMSrQbgbNBmxKBiqf1u6orluQ27Txv0IjCTu33mF+A
+# BAbZmx0b8BgSvNiuKKyO3MeylQViBZ5PgSpNEdADv5EOa0WbMgCR9/EX5I0ir8vs
+# 3w==
 # SIG # End signature block
