@@ -660,7 +660,7 @@ function Get-InterestingListeningPorts {
 }
 function Invoke-Forensic {
      param(
-        $failedevent, # Events failed logon (4625)
+        $failedevent,  # Events failed logon (4625)
         $successevent  # Events successful logon (4624)
     )
 
@@ -695,7 +695,7 @@ $result = foreach ($f in $forensic) {
     $Source = ($f.Group | Group-Object source | ForEach-Object {
     "$($_.Name) ($($_.Count))"}) -join "<br>"
 
-    # chercher les succès avec la même IP
+    # Succes with Same IP
     $successCount = $successMap[$ip]
 
     $dates = $f.Group | Select-Object -ExpandProperty Date
@@ -913,8 +913,6 @@ $remoteInfoHtml = ($remoteInfo.PSObject.Properties | ForEach-Object {
 
 }) -join "<br>"
 
-
-
 $ipRows = $result | ForEach-Object {
     "<tr>
         <td>$($_.IP)</td>
@@ -948,7 +946,7 @@ $total        = $totalFail + $totalSuccess
 
 $successRate = if ($totalFail -gt 0) {
     [math]::Round(
-        ($totalSuccess * 100.0) / $totalFail,
+        ($totalSuccess * 100.0) / $total,
         0,
         [System.MidpointRounding]::AwayFromZero
     )
@@ -1684,8 +1682,8 @@ $Window.ShowDialog() | Out-Null
 # SIG # Begin signature block
 # MIItjQYJKoZIhvcNAQcCoIItfjCCLXoCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCC4cjuERNs+Myiw
-# 4ZFhiO/FihIbXmwX+RQHNDwU0TEygqCCEtUwggXJMIIEsaADAgECAhAbtY8lKt8j
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCT2kMMhaB7c7WH
+# k4/5cquGaK7Rp0gaZHfvUoTMNZT8HqCCEtUwggXJMIIEsaADAgECAhAbtY8lKt8j
 # AEkoya49fu0nMA0GCSqGSIb3DQEBDAUAMH4xCzAJBgNVBAYTAlBMMSIwIAYDVQQK
 # ExlVbml6ZXRvIFRlY2hub2xvZ2llcyBTLkEuMScwJQYDVQQLEx5DZXJ0dW0gQ2Vy
 # dGlmaWNhdGlvbiBBdXRob3JpdHkxIjAgBgNVBAMTGUNlcnR1bSBUcnVzdGVkIE5l
@@ -1790,20 +1788,20 @@ $Window.ShowDialog() | Out-Null
 # YSBTeXN0ZW1zIFMuQS4xJDAiBgNVBAMTG0NlcnR1bSBDb2RlIFNpZ25pbmcgMjAy
 # MSBDQQIQNdjgcrVvnE2sr1R1KUYcCzANBglghkgBZQMEAgEFAKB8MBAGCisGAQQB
 # gjcCAQwxAjAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwGCisGAQQBgjcC
-# AQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCATWjrzbTpljV9Nlqcm
-# yZ1u2YeQYxWOYKU9RMh/Ag3GCjANBgkqhkiG9w0BAQEFAASCAYBNHTcft7w4+8Nx
-# qFoXa8hi/uZE5Hy6PRhW6Fub/civTgzRohxeds/ZD53NX3A97YLGYSwGJVm47rqH
-# bUS+2rCHp0zk4FWSS0Dqb2s5+gzb8HLBwNWhywwVYpoi/QPLbo1vJ+z5SIsdk90l
-# je6K1c8LOcwbKP+1UDNmSaCN1irPSB9KIgvtvdThzzknzkYCx4prsCxXd2p1ySnp
-# jHV+DNuWc82k1bZnUDUuZnJnegbc1G4cQBbcG4Xbs31XxlS1Yph2VjeNSisr5fYl
-# GTK3aw5oZVv8Ib39cORouCZZnVY0QJXSQ0vB9rWXhgSVqCStd36170LBLtrapF+6
-# Fx0wMK0MzpzoYjTESJ5ppGRbiNVIV2LOAwlMn/XccN+4sYvjGKn//Q4TnxDqKTFH
-# RWdx7wFYue3Wy5XdLzneqI/hIOrNnZaEsTMeoYRSa/8GtthVpfxXJKlwIQvpLqTk
-# NPhK4Bympz1Jv7Ke16jWl59BgGKKfiXBYwns2uyCawL757bJAROhghd3MIIXcwYK
+# AQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDuoQTPeLcAxkfrNlVj
+# AXBS/U9NWcp9MTT81UL7UZs5/zANBgkqhkiG9w0BAQEFAASCAYCI8n9Xckc7Tgk3
+# 5wNUr+Gp2A9wzg2quEfNO7QkqSEfW5/j7J0P0jwAgbS+jIYeel3ATnzbk2z/uZhs
+# Tjtu1w9IjGK2LlNrkF2YrmzdifWJV/pbAPvOAImlsIgq639u4SoPpbuOwomkaZiz
+# FWsqXZwEyJfOOr8uk2HTZRUsnnQkZSE4YIpmuL9egd4vWweY5JVHK/RUyKTOWzHW
+# At3TZ08qz1Ip5TnKvFfV8UwBtipfn7423OoJOiPJa/KdiekBSjWTWd0mWDQDYmp2
+# Gb9PlZP8LXs1e7djiIk4ILLMh7qkhU7y1EaiwKEA6HHT26UwVSOrhw8eYJhI5pPk
+# gu3POo7Nt/tIREZcbk5Yt7LdGsrjQQhzaaYtGHJE8jHTDr54jFlL25JfdGXBfkDW
+# oRImOJa63UIvtkROlUISwd5YE4BTwsTMpYwi+R5zzxEKs28mwl7LxNhm+gj33Ctr
+# 9Dm9SEH/hIacX8118pMskGOFoqwjgycCwHwfEUVWLc+axAkoxY6hghd3MIIXcwYK
 # KwYBBAGCNwMDATGCF2MwghdfBgkqhkiG9w0BBwKgghdQMIIXTAIBAzEPMA0GCWCG
 # SAFlAwQCAQUAMHgGCyqGSIb3DQEJEAEEoGkEZzBlAgEBBglghkgBhv1sBwEwMTAN
-# BglghkgBZQMEAgEFAAQgtPI7we+OHf+d3lzXTgKuqDycwXOWwGuZTSNhxsLCzaoC
-# EQCh0IYr5/ENdtGXO3TspjuuGA8yMDI2MDQyMTE0NDMyNVqgghM6MIIG7TCCBNWg
+# BglghkgBZQMEAgEFAAQgIEXIAXVtRFPNOqfdBWLkK5DVFXmcaUDPIFYjRnLzhBMC
+# EQDo477AhcisUIytoCMb4IcPGA8yMDI2MDQyODEzMzcxMFqgghM6MIIG7TCCBNWg
 # AwIBAgIQCoDvGEuN8QWC0cR2p5V0aDANBgkqhkiG9w0BAQsFADBpMQswCQYDVQQG
 # EwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xQTA/BgNVBAMTOERpZ2lDZXJ0
 # IFRydXN0ZWQgRzQgVGltZVN0YW1waW5nIFJTQTQwOTYgU0hBMjU2IDIwMjUgQ0Ex
@@ -1910,20 +1908,20 @@ $Window.ShowDialog() | Out-Null
 # FQYDVQQKEw5EaWdpQ2VydCwgSW5jLjFBMD8GA1UEAxM4RGlnaUNlcnQgVHJ1c3Rl
 # ZCBHNCBUaW1lU3RhbXBpbmcgUlNBNDA5NiBTSEEyNTYgMjAyNSBDQTECEAqA7xhL
 # jfEFgtHEdqeVdGgwDQYJYIZIAWUDBAIBBQCggdEwGgYJKoZIhvcNAQkDMQ0GCyqG
-# SIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0yNjA0MjExNDQzMjVaMCsGCyqGSIb3
+# SIb3DQEJEAEEMBwGCSqGSIb3DQEJBTEPFw0yNjA0MjgxMzM3MTBaMCsGCyqGSIb3
 # DQEJEAIMMRwwGjAYMBYEFN1iMKyGCi0wa9o4sWh5UjAH+0F+MC8GCSqGSIb3DQEJ
-# BDEiBCAaD7dX210qDWNAPBQR6iRuoVUptkKw1OmsARpG+x9lzzA3BgsqhkiG9w0B
+# BDEiBCApQE2wiSouVeBCK6lsfXYRgOkCA/W21X1mArtLhwUk8zA3BgsqhkiG9w0B
 # CRACLzEoMCYwJDAiBCBKoD+iLNdchMVck4+CjmdrnK7Ksz/jbSaaozTxRhEKMzAN
-# BgkqhkiG9w0BAQEFAASCAgAXXMNLtKphpvcb2HmJDQxG/Bzuk00aDaiViEVev3f2
-# vbdvtZpanikFYUv5OmFhl2EaewXFsmLj23rbcr9IuqHQMVIMFVo57zeRRoRUYSvc
-# 7wHqQkYQ5PUru0SzNd0sZ+QO6Th3Kh0UVgGSnzDc6TMhMpLpwswHR2dOcPqdBZJU
-# JXBTWlVQi2xEYi5tLX3hyuHem7ZqAl+tHNjHenAehtlPm9Esn1NjrW0rTY3QFr4K
-# m2zAmrk1ge6Sgph0LkIoW423d7rsrAGwdQOYUEZoLEdfvxK5uP4zM58qALLsSIBC
-# 6nwPbX8TmD3GJKOmmReraxR30hAWD6Nxz42Z8g1ugzyVjDRnDTT058bdmkATDM8z
-# +pt+BtY7UcgJN3Hvww294tstjLHswhYMuu3Il1kHZiZ/ACbCRvnXSwp0H3ZHNjSK
-# zZb9VniPUH2bMR5M+fApYNVteiztfop8tb4t73zCghbp2QiFGzmafCKW4SzMtH6I
-# +8ggVog9iWcVkvTAHI0/YCZwsyeRGSMjtlKT4r0TwFzEbSn9UI7l9GjTTdXav842
-# VYZvNSLQj0WOU6V/Gr7e+tEMSrQbgbNBmxKBiqf1u6orluQ27Txv0IjCTu33mF+A
-# BAbZmx0b8BgSvNiuKKyO3MeylQViBZ5PgSpNEdADv5EOa0WbMgCR9/EX5I0ir8vs
-# 3w==
+# BgkqhkiG9w0BAQEFAASCAgA1JV/UAEID7ZWFvvIY+CMD8oO6dzTzO5ddI+os4j+A
+# 8pmps+Hx8X4P/Ys9LOqeRcTvrVQ7nXU/EF08bcS0PAJyA/XTZDf1nu6hiQsZiyr0
+# BGenZ9D7vsTZC4s1Vzcz0ofkfFd9hI6bIYxndajrijWTO+ogULm7jULjKkoyjnP2
+# NPY/v5WRyyuQ2dhddRCuHVT0uk1BdkZy22ntuwBLU8+rTNa8QMhcl9yZ+e6cgxpS
+# gHGypmXVBSh/bQ6lDX+oBy42FuYSiU3X6TttR6UcV4f7+qeBbWM2evccq0C6STik
+# RgAsHH5bF2P8Rj0TQFI/2e+vimEPITxJv2kyvbbpYJarOYswDCRWAcGHl9wqi8/P
+# v5v66XgWerHe/rA68TAOdJexX4rclR0+NyrjYPUyVwlbe3pmdaxbHsCu489+UnPu
+# mpWdgeaQc4LaI64G6pkxm6fpHS/TRB6OuoJvRQ22HTneOLrVB12hu0EgKBV79nJm
+# sF0H2D9mQvOzDDnUdmROwnzbz1q9sGxmPB200L7Mv8b/jR4OxWxHM60AvHvmpEUb
+# iF8NBQZJfkBM+uyhMvxGxephBt7cB0txQQVjaNyC0x1YO+1USkID5gypuVWCYcKk
+# e0VHZfITIWxmvZvEbAMlNi4EtZWr3215tPHYnB/xGM5mNiTh1Ps3ErV7/ebW20Eq
+# xw==
 # SIG # End signature block
