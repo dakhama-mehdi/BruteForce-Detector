@@ -21,10 +21,17 @@ This tool provides a simple and efficient way to:
 
 [View Online Forensic Example](https://dakhama-mehdi.github.io/BruteForce-Detector/Examples/Forensic_Mode.html)
 
+## Prerequisite
+
+This script requires access to Windows Event Logs.
+You must either:
+
+- Run the script as **Administrator**
+- Or add the user to the **"Event Log Readers"** group
+
 ## Install
 The tool is designed to be easy to use:
 - Launch the `.ps1`
-- The script automatically ensures required permissions (Event Log Readers group)
 - Analyze logs through a graphical interface
 - Generate a ready-to-use forensic report
 
